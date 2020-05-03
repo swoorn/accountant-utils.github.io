@@ -46,8 +46,7 @@ function buttonClickHandler() {
 
 }
 
-function calculateResult(responseObject)
-{
+function calculateResult (responseObject) {
   var currency = $('#currencyInput').val();
   var value = $('#valueInput').val();
   var vat = $('#vatInput').val();
@@ -61,8 +60,15 @@ function calculateResult(responseObject)
   var resultValue = mid * value;
   var roundedValue = Math.round((resultValue + Number.EPSILON) * 100) / 100;
 
-  var resultVat = roundedValue * vat/100;
+  var resultVat = roundedValue * vat / 100;
   var roundedVat = Math.round((resultVat + Number.EPSILON) * 100) / 100;
+
+  $('#resultInput').val(
+    'Tabela: ' + no + '\n' +
+    'Data kursu: ' + effectiveDate + '\n' +
+    'Wartość PLN: ' + roundedValue + '\n' +
+    'VAT (' + vat + '%) PLN: ' + roundedVat + '\n'
+  );
 
 
   console.log("Value", roundedValue, resultValue);
