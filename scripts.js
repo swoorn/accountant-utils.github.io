@@ -14,7 +14,7 @@ function initDatePicker()
     language: "pl",
     autoclose: true,
     endDate: "0d",
-    showWeekDays: false,
+    showWeekDays: true,
   });
 }
 
@@ -55,7 +55,17 @@ function buttonClickHandler()
   });
 
   request.fail(function( jqXHR, textStatus ) {
-    alert( "Request failed: " + textStatus );
+    console.log(jqXHR, textStatus);
+
+    if (jqXHR.status === 404) {
+      alert("Brak danych dla wybranej daty");
+      return;
+    }
+
+    if (jqXHR.status === 400) {
+      alert("Błędne dane");
+      return;
+    }
   });
 }
 
@@ -103,8 +113,9 @@ function validateDate(date)
 function validateValue(value)
 {
   value = value.replace(/,/g, '.');
+
   // walidacja kwoty
-  if (!!value && Number.isNaN(Number(value).valueOf()) === true) {
+  if (!value || Number.isNaN(Number(value).valueOf()) === true) {
     $('#valueInput').addClass("is-invalid");
     return false;
   } else {
