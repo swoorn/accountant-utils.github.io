@@ -103,8 +103,9 @@ function validateDate(date)
 function validateValue(value)
 {
   value = value.replace(/,/g, '.');
+
   // walidacja kwoty
-  if (!!value && Number.isNaN(Number(value).valueOf()) === true) {
+  if (!value || Number.isNaN(Number(value).valueOf()) === true) {
     $('#valueInput').addClass("is-invalid");
     return false;
   } else {
